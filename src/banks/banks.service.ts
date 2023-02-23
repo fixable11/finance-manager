@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBankDto } from './dto/create-bank.dto';
 import { UpdateBankDto } from './dto/update-bank.dto';
+import { Model } from 'mongoose';
+import { Bank, BankDocument } from './schemas/bank.schema';
+import { InjectModel } from '@nestjs/mongoose';
+
+const LIST_LIMIT = 10;
 
 @Injectable()
 export class BanksService {
-  create(createBankDto: CreateBankDto) {
-    return 'This action adds a new bank';
+  constructor(
+    @InjectModel(Bank.name) private readonly bank: Model<BankDocument>,
+  ) {}
+
+  async create(createBankDto: CreateBankDto): Promise<Bank> {
+    return await this.bank.create(createBankDto);
   }
 
-  findAll() {
-    return `This action returns all banks`;
+  async findAll(page): Promise<Bank[]> {
+    const skip = (parseInt(page) - 1) * LIST_LIMIT;
+
+    return await this.bank.find({}).skip(skip).limit(LIST_LIMIT).exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} bank`;
+  async findOne(id: string): Promise<Bank> {
+    return await this.bank.findOne({ _id: id }).exec();
   }
 
-  update(id: number, updateBankDto: UpdateBankDto) {
-    return `This action updates a #${id} bank`;
+  async update(id: string, updateBankDto: UpdateBankDto) {
+    return await this.bank.findOneAndUpdate({ _id: id }, updateBankDto).exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} bank`;
+  async remove(id: string) {
+    return await this.bank.findByIdAndRemove(id).exec();
   }
 }
