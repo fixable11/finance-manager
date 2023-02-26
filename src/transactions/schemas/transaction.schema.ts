@@ -43,7 +43,7 @@ TransactionSchema.methods.toJson = function (): Record<string, any> {
     _id,
     amount,
     type,
-    bank,
-    categories,
+    bank: bank.toJson(),
+    categories: categories.map((category) => category.toJson()),
   };
 };

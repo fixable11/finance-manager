@@ -11,10 +11,14 @@ import {
 import { BanksService } from './banks.service';
 import { CreateBankDto } from './dto/create-bank.dto';
 import { UpdateBankDto } from './dto/update-bank.dto';
+import { BankActions } from './actions/bank.actions';
 
 @Controller('banks')
 export class BanksController {
-  constructor(private readonly banksService: BanksService) {}
+  constructor(
+    private readonly banksService: BanksService,
+    private readonly bankActions: BankActions,
+  ) {}
 
   @Post()
   async create(@Body() createBankDto: CreateBankDto) {
@@ -47,6 +51,6 @@ export class BanksController {
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    await this.banksService.remove(id);
+    await this.bankActions.deleteBank(id);
   }
 }
