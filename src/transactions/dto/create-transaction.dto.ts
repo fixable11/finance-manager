@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 import { TransactionType } from '../schemas/transaction.schema';
 import { Bank } from '../../banks/schemas/bank.schema';
-import { IsRelationShipWith } from '../../custom/is-relationship/is-realtionshop.decorator';
+import { IsRelationShipWith } from '../../common/is-relationship/is-realtionshop.decorator';
 import { Category } from '../../category/schemas/category.schema';
 
 export class CreateTransactionDto {
