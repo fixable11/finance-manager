@@ -37,7 +37,6 @@ TransactionSchema.methods.getId = function (): string {
 
 TransactionSchema.methods.toJson = function (): Record<string, any> {
   const { _id, amount, type, bank, categories } = this;
-  console.log('test', bank);
 
   return {
     _id,

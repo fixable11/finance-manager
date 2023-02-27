@@ -26,7 +26,12 @@ export class TransactionsService {
   async findAll(page): Promise<Transaction[]> {
     const skip = (parseInt(page) - 1) * LIST_LIMIT;
 
-    return await this.transaction.find({}).skip(skip).limit(LIST_LIMIT).exec();
+    return await this.transaction
+      .find({})
+      .skip(skip)
+      .limit(LIST_LIMIT)
+      .populate(['bank', 'categories'])
+      .exec();
   }
 
   async remove(id: string) {
