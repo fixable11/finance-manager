@@ -46,3 +46,19 @@ TransactionSchema.methods.toJson = function (): Record<string, any> {
     categories: categories.map((category) => category.toJson()),
   };
 };
+
+TransactionSchema.post('save', async function (doc, next) {
+  await doc.populate('bank');
+  doc.bank.balance += Number(doc.amount);
+  doc.bank.save();
+
+  next();
+});
+
+TransactionSchema.post('findOneAndRemove', async function (doc, next) {
+  await doc.populate('bank');
+  doc.bank.balance -= Number(doc.amount);
+  doc.bank.save();
+
+  next();
+});
