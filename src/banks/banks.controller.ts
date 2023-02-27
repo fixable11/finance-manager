@@ -12,7 +12,9 @@ import { BanksService } from './banks.service';
 import { CreateBankDto } from './dto/create-bank.dto';
 import { UpdateBankDto } from './dto/update-bank.dto';
 import { BankActions } from './actions/bank.actions';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('banks')
 @Controller('banks')
 export class BanksController {
   constructor(
