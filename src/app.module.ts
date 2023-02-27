@@ -26,7 +26,8 @@ import { LoggerModule } from 'nestjs-pino';
             colorize: true,
             levelFirst: true,
             translateTime: 'yyyy-dd-mm, h:MM:ss TT',
-            destination: 'storage/app.log',
+            destination:
+              process.env.NODE_ENV === 'production' ? 'storage/app.log' : 1,
           },
         },
       },

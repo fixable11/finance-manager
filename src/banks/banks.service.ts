@@ -20,7 +20,7 @@ export class BanksService {
   async findAll(page): Promise<Bank[]> {
     const skip = (parseInt(page) - 1) * LIST_LIMIT;
 
-    return await this.bank.find({}).skip(skip).limit(LIST_LIMIT).exec();
+    return await this.bank.find({}).skip(-5).limit(LIST_LIMIT).exec();
   }
 
   async findOne(id: string): Promise<Bank> {
