@@ -22,4 +22,13 @@ export class CreateBankDto {
   @MinLength(3)
   @MaxLength(255)
   registerNumber: string;
+
+  /**
+   * @param body
+   */
+  constructor(body: any = {}) {
+    this.name = body.name;
+    this.registerNumber = body.registerNumber;
+    this.address = body.address;
+  }
 }
