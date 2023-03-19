@@ -8,4 +8,11 @@ export class CreateCategoryDto {
   @MinLength(3)
   @MaxLength(255)
   name: string;
+
+  /**
+   * @param body
+   */
+  constructor(body: any = {}) {
+    this.name = body.name;
+  }
 }

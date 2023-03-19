@@ -58,17 +58,9 @@ describe('BanksService', () => {
       address: 'test',
     });
     await validate(dto);
-    const col = mongoConnection.db.collection('banks');
-    let { insertedId }: any = await col.insertOne({
-      registerNumber: 'test',
-      name: 'test bank',
-      address: 'adrr',
-      balance: 100,
-    });
-    insertedId = String(insertedId);
-    await service.create(dto);
+    const { _id } = await service.create(dto);
     expect(createNoteSpy).toHaveBeenCalledWith(dto);
-    const bank = await service.findOne(insertedId);
+    const bank = await service.findOne(_id);
     expect(bank.registerNumber).toBe(dto.registerNumber);
   });
 

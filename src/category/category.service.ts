@@ -18,8 +18,8 @@ export class CategoryService {
     return await this.category.create(createCategoryDto);
   }
 
-  async findAll(page): Promise<Category[]> {
-    const skip = (parseInt(page) - 1) * LIST_LIMIT;
+  async findAll(page = 1): Promise<Category[]> {
+    const skip = (parseInt(`${page}`) - 1) * LIST_LIMIT;
 
     return await this.category.find({}).skip(skip).limit(LIST_LIMIT).exec();
   }
