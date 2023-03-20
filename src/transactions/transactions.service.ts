@@ -38,10 +38,6 @@ export class TransactionsService {
     return await this.transaction.findByIdAndRemove(id).exec();
   }
 
-  async findAllByBankId(bankId: string) {
-    return await this.transaction.find({ bankId: bankId }).exec();
-  }
-
   async transactionExists(bankId: string): Promise<boolean> {
     return (await this.transaction.find({ bankId: bankId }).count().exec()) > 0;
   }

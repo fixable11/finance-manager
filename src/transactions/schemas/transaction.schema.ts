@@ -57,8 +57,10 @@ TransactionSchema.post('save', async function (doc, next) {
 
 TransactionSchema.post('findOneAndRemove', async function (doc, next) {
   await doc.populate('bank');
-  doc.bank.balance -= Number(doc.amount);
-  doc.bank.save();
+  if (doc.bank) {
+    doc.bank.balance -= Number(doc.amount);
+    doc.bank.save();
+  }
 
   next();
 });

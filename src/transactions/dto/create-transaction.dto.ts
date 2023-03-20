@@ -12,6 +12,13 @@ import { IsRelationShipWith } from '../../common/is-relationship/is-realtionshop
 import { Category } from '../../category/schemas/category.schema';
 import { ApiProperty } from '@nestjs/swagger';
 
+type TransactionBody = {
+  amount: number;
+  type: TransactionType;
+  bankId: string;
+  categoryIds: string[];
+};
+
 export class CreateTransactionDto {
   @ApiProperty({ minimum: 0 })
   @IsNotEmpty()
@@ -36,4 +43,16 @@ export class CreateTransactionDto {
   @IsMongoId({ each: true })
   @IsRelationShipWith(Category, { each: true })
   categoryIds: string[];
+
+  /**
+   * @param body
+   */
+  constructor(body: TransactionBody | null = null) {
+    if (!body) return;
+
+    this.amount = body.amount;
+    this.type = body.type;
+    this.bankId = body.bankId;
+    this.categoryIds = body.categoryIds;
+  }
 }

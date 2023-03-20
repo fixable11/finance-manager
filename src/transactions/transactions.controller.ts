@@ -28,7 +28,6 @@ export class TransactionsController {
   @Get()
   async findAll(@Query('page') page = 1) {
     const transactions = await this.transactionsService.findAll(page);
-    console.log('transactions', transactions);
 
     return transactions.map((transaction) => transaction.toJson());
   }
