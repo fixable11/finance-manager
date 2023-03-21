@@ -1,9 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Category, CategoryDocument } from './schemas/category.schema';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
+import { validateId } from '../common/validation/entity.validation';
 
 const LIST_LIMIT = 10;
 
@@ -25,16 +30,30 @@ export class CategoryService {
   }
 
   async findOne(id: string): Promise<Category> {
-    return await this.category.findOne({ _id: id }).exec();
+    validateId(id);
+
+    const category: Category | null = await this.category
+      .findOne({ _id: id })
+      .exec();
+
+    if (!category) {
+      throw new NotFoundException('Category was not found');
+    }
+
+    return category;
   }
 
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {
+    validateId(id);
+
     return await this.category
       .findOneAndUpdate({ _id: id }, updateCategoryDto)
       .exec();
   }
 
   async remove(id: string) {
+    validateId(id);
+
     return await this.category.findByIdAndRemove(id).exec();
   }
 }
