@@ -7,7 +7,7 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { Connection } from 'mongoose';
+import { Connection, connection } from 'mongoose';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
@@ -16,7 +16,7 @@ export class IsRelationshipProvider implements ValidatorConstraintInterface {
 
   async validate(value: any, args: ValidationArguments): Promise<boolean> {
     try {
-      const result = await this.connection.models[
+      const result = await (this.connection || connection).models[
         args.constraints[0].name
       ].findById(value);
 

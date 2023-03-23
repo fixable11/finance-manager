@@ -33,7 +33,7 @@ export class TransactionsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    this.transactionsService.remove(id);
+  async remove(@Param('id') id: string) {
+    await this.transactionsService.remove(id);
   }
 }

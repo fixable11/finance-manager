@@ -80,7 +80,7 @@ describe('CategoryController', () => {
       expect(list).toEqual([]);
     });
 
-    it('should return validation error', async () => {
+    it('should return items', async () => {
       const dto1 = new CreateCategoryDto({ name: 'test' });
       const dto2 = new CreateCategoryDto({ name: 'test2' });
       await controller.create(dto1);

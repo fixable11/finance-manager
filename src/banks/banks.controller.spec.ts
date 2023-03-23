@@ -101,7 +101,7 @@ describe('BanksController', () => {
       expect(list).toEqual([]);
     });
 
-    it('should return validation error', async () => {
+    it('should return items', async () => {
       const dto1 = new CreateBankDto({
         name: 'test',
         address: 'test1',

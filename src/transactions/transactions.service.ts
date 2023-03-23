@@ -3,6 +3,7 @@ import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Transaction, TransactionDocument } from './schemas/transaction.schema';
+import { validateId } from '../common/validation/entity.validation';
 
 const LIST_LIMIT = 10;
 
@@ -35,6 +36,8 @@ export class TransactionsService {
   }
 
   async remove(id: string) {
+    validateId(id);
+
     return await this.transaction.findByIdAndRemove(id).exec();
   }
 

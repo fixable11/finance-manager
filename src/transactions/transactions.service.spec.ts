@@ -85,7 +85,8 @@ describe('TransactionsService', () => {
       bankId: bankId,
       categoryIds: [categoryId],
     });
-    await validate(dto);
+    const errors = await validate(dto);
+    expect(errors.length).toBe(0);
     const { _id } = await service.create(dto);
     expect(methodSpy).toHaveBeenCalledWith(dto);
     const col = mongoConnection.db.collection('transactions');
